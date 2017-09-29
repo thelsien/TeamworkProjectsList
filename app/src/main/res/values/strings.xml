@@ -4,4 +4,5 @@
     <string name="error_projects_list_server_query">Error during getting data from the server. Try again later!</string>
     <string name="error_projects_list_parsing_data">Error during parsing data from the server.</string>
     <string name="error_projects_list_server_message_empty">The server return with empty message.</string>
+    <string name="empty_list">The list is currently empty.</string>
 </resources>

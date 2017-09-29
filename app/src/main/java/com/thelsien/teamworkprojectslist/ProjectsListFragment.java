@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thelsien.teamworkprojectslist.adapters.ProjectsListAdapter;
 import com.thelsien.teamworkprojectslist.background.ProjectsListAsyncTask;
 
 import org.json.JSONArray;
@@ -64,6 +66,18 @@ public class ProjectsListFragment extends Fragment implements ProjectsListAsyncT
     private void populateList() {
         mLoadingProgressBar.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if (mProjectsList.length() != 0) {
+            ProjectsListAdapter adapter = new ProjectsListAdapter(mProjectsList);
+            mRecyclerView.setAdapter(adapter);
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mErrorTextView.setVisibility(View.VISIBLE);
+
+            mErrorTextView.setText(R.string.empty_list);
+        }
     }
 
     @Override
