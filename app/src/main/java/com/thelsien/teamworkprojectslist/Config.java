@@ -7,4 +7,5 @@ package com.thelsien.teamworkprojectslist;
 public class Config {
     public static final String BASE_URL = "https://yat.teamwork.com/";
     public static final String PROJECTS = "projects.json";
+    public static final String PROJECT_DETAIL = "projects/%s.json";
 }

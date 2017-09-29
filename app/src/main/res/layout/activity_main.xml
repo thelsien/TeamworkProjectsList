@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/fragment_projects_list"
-        android:name="com.thelsien.teamworkprojectslist.ProjectsListFragment"
+        android:name="com.thelsien.teamworkprojectslist.projectslist.ProjectsListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

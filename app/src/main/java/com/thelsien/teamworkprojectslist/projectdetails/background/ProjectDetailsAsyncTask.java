@@ -1,14 +1,15 @@
-package com.thelsien.teamworkprojectslist.background;
+package com.thelsien.teamworkprojectslist.projectdetails.background;
 
 import android.os.AsyncTask;
 import android.support.annotation.StringRes;
+import android.util.Log;
 
 import com.thelsien.teamworkprojectslist.Base64Coder;
 import com.thelsien.teamworkprojectslist.BuildConfig;
 import com.thelsien.teamworkprojectslist.Config;
 import com.thelsien.teamworkprojectslist.R;
+import com.thelsien.teamworkprojectslist.projectdetails.ProjectDetailsActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,25 +19,30 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ProjectsListAsyncTask extends AsyncTask<Void, Void, Void> {
+/**
+ * Created by frodo on 2017-09-29.
+ */
 
-    public static final String TAG = ProjectsListAsyncTask.class.getSimpleName();
+public class ProjectDetailsAsyncTask extends AsyncTask<String, Void, Void> {
+    public static final String TAG = ProjectDetailsAsyncTask.class.getSimpleName();
 
-    private ProjectsListListener mListener;
+    private ProjectDetailsLoaderListener mListener;
     private JSONObject mData;
     private boolean mIsError = false;
     private @StringRes int mErrorMessageId;
 
-    public ProjectsListAsyncTask(ProjectsListListener listener) {
+    public ProjectDetailsAsyncTask(ProjectDetailsLoaderListener listener) {
         mListener = listener;
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Void doInBackground(String... params) {
+        Log.d(TAG, String.format(Config.PROJECT_DETAIL, params[0]));
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .addHeader("Authorization", "Basic " + Base64Coder.encodeString(BuildConfig.TeamworkAPIKey+":"))
-                .url(Config.BASE_URL + Config.PROJECTS)
+                .url(Config.BASE_URL + String.format(Config.PROJECT_DETAIL, params[0]))
                 .build();
 
         try {
@@ -65,21 +71,21 @@ public class ProjectsListAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         if (mIsError) {
-            mListener.onProjectsLoadFailed(mErrorMessageId);
+            mListener.onProjectDetailsLoadFailed(mErrorMessageId);
             return;
         }
+
+        Log.d(TAG, mData.toString());
 
         if (mData != null && mData.optString("STATUS").equals("OK")) {
-            mListener.onProjectsLoadSuccess(mData.optJSONArray("projects"));
-            return;
+            mListener.onProjectDetailsLoaded(mData.optJSONObject("project"));
         }
 
-        mListener.onProjectsLoadFailed(R.string.error_general);
+        mListener.onProjectDetailsLoadFailed(R.string.error_general);
     }
 
-    public interface ProjectsListListener {
-        void onProjectsLoadSuccess(JSONArray projects);
-
-        void onProjectsLoadFailed(@StringRes int messageId);
+    public interface ProjectDetailsLoaderListener {
+        void onProjectDetailsLoaded(JSONObject project);
+        void onProjectDetailsLoadFailed(@StringRes int messageId);
     }
 }

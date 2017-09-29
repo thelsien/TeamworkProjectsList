@@ -2,11 +2,6 @@ package com.thelsien.teamworkprojectslist;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import com.thelsien.teamworkprojectslist.background.ProjectsListAsyncTask;
-
-import org.json.JSONArray;
 
 public class MainActivity extends AppCompatActivity {
 

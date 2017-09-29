@@ -1,4 +1,4 @@
-package com.thelsien.teamworkprojectslist;
+package com.thelsien.teamworkprojectslist.projectslist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.thelsien.teamworkprojectslist.adapters.ProjectsListAdapter;
-import com.thelsien.teamworkprojectslist.background.ProjectsListAsyncTask;
+import com.thelsien.teamworkprojectslist.R;
+import com.thelsien.teamworkprojectslist.projectslist.adapters.ProjectsListAdapter;
+import com.thelsien.teamworkprojectslist.projectslist.background.ProjectsListAsyncTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;

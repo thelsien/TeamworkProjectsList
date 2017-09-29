@@ -7,4 +7,5 @@
     <dimen name="padding_16dp">16dp</dimen>
     <dimen name="padding_32dp">32dp</dimen>
     <dimen name="list_row_single_line_height">48dp</dimen>
+    <dimen name="project_details_appbar_height">128dp</dimen>
 </resources>
