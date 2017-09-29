@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Teamwork Projects List</string>
+    <string name="error_general">Error during loading the list</string>
+    <string name="error_projects_list_server_query">Error during getting data from the server. Try again later!</string>
+    <string name="error_projects_list_parsing_data">Error during parsing data from the server.</string>
+    <string name="error_projects_list_server_message_empty">The server return with empty message.</string>
 </resources>
