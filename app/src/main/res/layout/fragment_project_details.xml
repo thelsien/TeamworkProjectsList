@@ -1,7 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="@dimen/progress_bar_size"
+        android:layout_height="@dimen/progress_bar_size"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/padding_16dp"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/sv_project_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingEnd="@dimen/padding_16dp"
+        android:paddingStart="@dimen/padding_16dp"
+        android:paddingTop="8dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/wrapper_description"
+                style="@style/FullWidth"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_description_label"
+                    style="@style/Label"
+                    android:text="@string/project_description_label" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    style="@style/RegularText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/wrapper_company"
+                style="@style/FullWidth"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Label"
+                    android:text="@string/project_company_name_label" />
+
+                <TextView
+                    android:id="@+id/tv_company_name"
+                    style="@style/RegularText" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

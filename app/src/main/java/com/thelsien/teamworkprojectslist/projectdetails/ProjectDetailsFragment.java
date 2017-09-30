@@ -3,13 +3,12 @@ package com.thelsien.teamworkprojectslist.projectdetails;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.thelsien.teamworkprojectslist.R;
 import com.thelsien.teamworkprojectslist.projectdetails.background.ProjectDetailsAsyncTask;
@@ -22,16 +21,19 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
 
     public static final String PROJECT_ID_KEY = "project_id";
     public static final String PROJECT_KEY = "project";
-    public static final String PROJECT_NAME_KEY = "project_name";
 
     private String mProjectId;
-    private String mProjectName;
     private JSONObject mProject;
+
+    private TextView mDescriptionTextView;
+    private TextView mCompanyNameTextView;
+    private ProgressBar mLoadingProgressBar;
+    private ScrollView mContentScrollView;
+    private TextView mErrorTextView;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(PROJECT_ID_KEY, mProjectId);
-        outState.putString(PROJECT_NAME_KEY, mProjectName);
         outState.putString(PROJECT_KEY, mProject.toString());
 
         super.onSaveInstanceState(outState);
@@ -51,14 +53,21 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        mDescriptionTextView = view.findViewById(R.id.tv_description);
+        mCompanyNameTextView = view.findViewById(R.id.tv_company_name);
+        mLoadingProgressBar = view.findViewById(R.id.pb_loading);
+        mContentScrollView = view.findViewById(R.id.sv_project_details);
+        mErrorTextView = view.findViewById(R.id.tv_error);
+
         if (savedInstanceState == null) {
             mProjectId = getActivity().getIntent().getStringExtra(PROJECT_ID_KEY);
-            mProjectName = getActivity().getIntent().getStringExtra(PROJECT_NAME_KEY);
 
             new ProjectDetailsAsyncTask(this).execute(mProjectId);
         } else {
+            mLoadingProgressBar.setVisibility(View.GONE);
+            mContentScrollView.setVisibility(View.VISIBLE);
+
             mProjectId = savedInstanceState.getString(PROJECT_ID_KEY);
-            mProjectName = savedInstanceState.getString(PROJECT_NAME_KEY);
 
             try {
                 mProject = new JSONObject(savedInstanceState.getString(PROJECT_KEY));
@@ -72,18 +81,32 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
     }
 
     private void fillWithContent() {
+        String description = mProject.optString("description", "");
 
+        if (description.equals("")) {
+            mDescriptionTextView.setTextColor(getResources().getColor(R.color.alt_text_color));
+            description = getString(R.string.project_description_empty);
+        }
+
+        mDescriptionTextView.setText(description);
+
+        mCompanyNameTextView.setText(mProject.optJSONObject("company").optString("name"));
     }
 
     @Override
     public void onProjectDetailsLoaded(JSONObject project) {
-        mProject = project;
+        mLoadingProgressBar.setVisibility(View.GONE);
+        mContentScrollView.setVisibility(View.VISIBLE);
 
+        mProject = project;
         fillWithContent();
     }
 
     @Override
     public void onProjectDetailsLoadFailed(int messageId) {
+        mLoadingProgressBar.setVisibility(View.GONE);
+        mErrorTextView.setVisibility(View.VISIBLE);
 
+        mErrorTextView.setText(messageId);
     }
 }

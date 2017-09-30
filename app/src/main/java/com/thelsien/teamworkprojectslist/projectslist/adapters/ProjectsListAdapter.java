@@ -14,10 +14,6 @@ import com.thelsien.teamworkprojectslist.projectdetails.ProjectDetailsFragment;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- * Created by frodo on 2017-09-29.
- */
-
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.ProjectsListViewHolder> {
 
     private JSONArray mProjects;
@@ -45,7 +41,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                 JSONObject project = mProjects.optJSONObject(holder.getAdapterPosition());
                 Intent intent = new Intent(view.getContext(), ProjectDetailsActivity.class);
                 intent.putExtra(ProjectDetailsFragment.PROJECT_ID_KEY, project.optString("id"));
-                intent.putExtra(ProjectDetailsFragment.PROJECT_NAME_KEY, project.optString("name"));
+                intent.putExtra(ProjectDetailsActivity.PROJECT_NAME_KEY, project.optString("name"));
                 view.getContext().startActivity(intent);
             }
         });

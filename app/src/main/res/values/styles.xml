@@ -22,4 +22,26 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="FullWidth">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Label" parent="FullWidth">
+        <item name="android:textColor">@color/label_color</item>
+        <item name="android:textSize">@dimen/label_size</item>
+        <item name="android:paddingTop">@dimen/padding_16dp</item>
+        <item name="android:paddingBottom">@dimen/padding_4dp</item>
+    </style>
+
+    <style name="RegularText" parent="FullWidth">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <!--<style name="SubSection" parent="FullWidth">-->
+        <!--<item name="android:paddingLeft">@dimen/project_details_subsection_start_padding</item>-->
+        <!--<item name="android:layout_weight">3</item>-->
+        <!--<item name="android:orientation">horizontal</item>-->
+    <!--</style>-->
 </resources>

@@ -5,4 +5,7 @@
     <string name="error_projects_list_parsing_data">Error during parsing data from the server.</string>
     <string name="error_projects_list_server_message_empty">The server return with empty message.</string>
     <string name="empty_list">The list is currently empty.</string>
+    <string name="project_description_label">Description</string>
+    <string name="project_description_empty">No description given.</string>
+    <string name="project_company_name_label">Company name</string>
 </resources>

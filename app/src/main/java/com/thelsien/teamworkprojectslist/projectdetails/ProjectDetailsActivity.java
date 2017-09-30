@@ -11,6 +11,8 @@ import com.thelsien.teamworkprojectslist.R;
 
 public class ProjectDetailsActivity extends AppCompatActivity {
 
+    public static final String PROJECT_NAME_KEY = "project_name";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +20,7 @@ public class ProjectDetailsActivity extends AppCompatActivity {
 
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitleEnabled(true);
-        collapsingToolbarLayout.setTitle(getIntent().getStringExtra(ProjectDetailsFragment.PROJECT_NAME_KEY));
+        collapsingToolbarLayout.setTitle(getIntent().getStringExtra(PROJECT_NAME_KEY));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

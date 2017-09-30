@@ -79,6 +79,7 @@ public class ProjectDetailsAsyncTask extends AsyncTask<String, Void, Void> {
 
         if (mData != null && mData.optString("STATUS").equals("OK")) {
             mListener.onProjectDetailsLoaded(mData.optJSONObject("project"));
+            return;
         }
 
         mListener.onProjectDetailsLoadFailed(R.string.error_general);
