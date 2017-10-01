@@ -27,38 +27,192 @@
         android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/FullWidth"
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/wrapper_description"
                 style="@style/FullWidth"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_description_label"
                     style="@style/Label"
-                    android:text="@string/project_description_label" />
+                    android:paddingTop="@dimen/padding_0dp"
+                    android:text="@string/project_details_general" />
 
-                <TextView
-                    android:id="@+id/tv_description"
-                    style="@style/RegularText" />
+                <LinearLayout
+                    style="@style/FullWidth"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            android:id="@+id/tv_description_label"
+                            style="@style/SectionLabel"
+                            android:text="@string/project_description_label" />
+
+                        <TextView
+                            android:id="@+id/tv_description"
+                            style="@style/SectionValue" />
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_company_name_label" />
+
+                        <TextView
+                            android:id="@+id/tv_company_name"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_category_label" />
+
+                        <TextView
+                            android:id="@+id/tv_category"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_startpage_label" />
+
+                        <TextView
+                            android:id="@+id/tv_start_page"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_overview_start_page_label" />
+
+                        <TextView
+                            android:id="@+id/tv_overview_start_page"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_reply_by_email_label" />
+
+                        <TextView
+                            android:id="@+id/tv_reply_by_email"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_privacy_label" />
+
+                        <TextView
+                            android:id="@+id/tv_privacy"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_status_label" />
+
+                        <TextView
+                            android:id="@+id/tv_status"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_task_view_label" />
+
+                        <TextView
+                            android:id="@+id/tv_task_view"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/wrapper_company"
                 style="@style/FullWidth"
                 android:orientation="vertical">
 
                 <TextView
                     style="@style/Label"
-                    android:text="@string/project_company_name_label" />
+                    android:text="@string/project_details_announcement" />
+
+                <LinearLayout
+                    style="@style/FullWidth"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_announcement_text_label" />
+
+                        <TextView
+                            android:id="@+id/tv_announcement_text"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/SubSection">
+
+                        <TextView
+                            style="@style/SectionLabel"
+                            android:text="@string/project_announcement_enabled_label" />
+
+                        <TextView
+                            android:id="@+id/tv_announcement_enabled"
+                            style="@style/SectionValue" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/FullWidth"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_company_name"
-                    style="@style/RegularText" />
+                    style="@style/Label"
+                    android:text="@string/project_details_logo" />
 
+                <LinearLayout
+                    style="@style/FullWidth"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/padding_8dp">
+
+                    <ImageView
+                        android:id="@+id/iv_logo"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/project_logo_description"
+                        android:gravity="center_horizontal" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

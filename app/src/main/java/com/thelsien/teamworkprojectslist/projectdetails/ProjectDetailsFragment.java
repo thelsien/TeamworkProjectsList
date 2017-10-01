@@ -6,10 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.thelsien.teamworkprojectslist.R;
 import com.thelsien.teamworkprojectslist.projectdetails.background.ProjectDetailsAsyncTask;
 
@@ -27,9 +30,20 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
 
     private TextView mDescriptionTextView;
     private TextView mCompanyNameTextView;
+    private TextView mCategoryTextView;
+    private TextView mStartPageTextView;
+    private TextView mOverviewStartPageTextView;
+    private TextView mReplyByEmailTextView;
+    private TextView mPrivacyTextView;
+    private TextView mStatusTextView;
+    private TextView mTaskViewTextView;
+    private ImageView mLogoImageView;
+
     private ProgressBar mLoadingProgressBar;
     private ScrollView mContentScrollView;
     private TextView mErrorTextView;
+    private TextView mAnnouncementTextView;
+    private TextView mAnnouncementEnabledView;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -55,6 +69,17 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mDescriptionTextView = view.findViewById(R.id.tv_description);
         mCompanyNameTextView = view.findViewById(R.id.tv_company_name);
+        mCategoryTextView = view.findViewById(R.id.tv_category);
+        mStartPageTextView = view.findViewById(R.id.tv_start_page);
+        mOverviewStartPageTextView = view.findViewById(R.id.tv_overview_start_page);
+        mReplyByEmailTextView = view.findViewById(R.id.tv_reply_by_email);
+        mPrivacyTextView = view.findViewById(R.id.tv_privacy);
+        mStatusTextView = view.findViewById(R.id.tv_status);
+        mTaskViewTextView = view.findViewById(R.id.tv_task_view);
+        mAnnouncementTextView = view.findViewById(R.id.tv_announcement_text);
+        mAnnouncementEnabledView = view.findViewById(R.id.tv_announcement_enabled);
+        mLogoImageView = view.findViewById(R.id.iv_logo);
+
         mLoadingProgressBar = view.findViewById(R.id.pb_loading);
         mContentScrollView = view.findViewById(R.id.sv_project_details);
         mErrorTextView = view.findViewById(R.id.tv_error);
@@ -81,16 +106,29 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
     }
 
     private void fillWithContent() {
-        String description = mProject.optString("description", "");
+        mDescriptionTextView.setText(mProject.optString("description", getString(R.string.project_description_empty)));
+        mCompanyNameTextView.setText(mProject.optJSONObject("company").optString("name", getString(R.string.project_no_company)));
+        mStartPageTextView.setText(mProject.optString("start-page", getString(R.string.project_startpage_default)));
+        mOverviewStartPageTextView.setText(mProject.optString("overview-start-page", getString(R.string.project_overview_startpage_default)));
+        mReplyByEmailTextView.setText(mProject.optString("replyByEmailEnabled", getString(R.string.project_reply_by_email_default)));
+        mPrivacyTextView.setText(mProject.optString("defaultPrivacy", getString(R.string.project_privacy_default)));
+        mStatusTextView.setText(mProject.optString("status", getString(R.string.project_status_default)));
+        mTaskViewTextView.setText(mProject.optString("tasks-start-page", getString(R.string.project_task_view_default)));
+        mAnnouncementTextView.setText(mProject.optString("announcement", ""));
+        mAnnouncementEnabledView.setText(mProject.optString("show-announcement", getString(R.string.project_announcement_enabled_default)));
 
-        if (description.equals("")) {
-            mDescriptionTextView.setTextColor(getResources().getColor(R.color.alt_text_color));
-            description = getString(R.string.project_description_empty);
+        String category = mProject.optJSONObject("category").optString("name", getString(R.string.project_no_category));
+        if (category.equals("")) {
+            category = getString(R.string.project_no_category);
         }
+        mCategoryTextView.setText(category);
 
-        mDescriptionTextView.setText(description);
-
-        mCompanyNameTextView.setText(mProject.optJSONObject("company").optString("name"));
+        Glide.with(this)
+                .load(mProject.optString("logo"))
+                .apply(new RequestOptions()
+                        .fallback(R.drawable.default_img)
+                        .placeholder(R.drawable.default_img))
+                .into(mLogoImageView);
     }
 
     @Override

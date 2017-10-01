@@ -8,4 +8,26 @@
     <string name="project_description_label">Description</string>
     <string name="project_description_empty">No description given.</string>
     <string name="project_company_name_label">Company name</string>
+    <string name="project_details_general">General informations</string>
+    <string name="project_category_label">Category</string>
+    <string name="project_no_category">No category.</string>
+    <string name="project_startpage_label">Start page</string>
+    <string name="project_no_company">No company.</string>
+    <string name="project_startpage_default">Overview</string>
+    <string name="project_overview_start_page_label">Overview Start Page</string>
+    <string name="project_overview_startpage_default">Default</string>
+    <string name="project_reply_by_email_label">Reply by email</string>
+    <string name="project_reply_by_email_default">true</string>
+    <string name="project_privacy_label">Default privacy</string>
+    <string name="project_status_label">Status</string>
+    <string name="project_task_view_label">Default task view</string>
+    <string name="project_privacy_default">Open</string>
+    <string name="project_status_default">Active</string>
+    <string name="project_task_view_default">Default</string>
+    <string name="project_details_announcement">Project Announcement</string>
+    <string name="project_announcement_text_label">Announcement</string>
+    <string name="project_announcement_enabled_label">Enabled?</string>
+    <string name="project_announcement_enabled_default">false</string>
+    <string name="project_details_logo">Project Logo</string>
+    <string name="project_logo_description">Project logo</string>
 </resources>
