@@ -8,7 +8,7 @@
     <string name="project_description_label">Description</string>
     <string name="project_description_empty">No description given.</string>
     <string name="project_company_name_label">Company name</string>
-    <string name="project_details_general">General informations</string>
+    <string name="project_details_general">General information</string>
     <string name="project_category_label">Category</string>
     <string name="project_no_category">No category.</string>
     <string name="project_startpage_label">Start page</string>
@@ -30,4 +30,6 @@
     <string name="project_announcement_enabled_default">false</string>
     <string name="project_details_logo">Project Logo</string>
     <string name="project_logo_description">Project logo</string>
+    <string name="project_details_empty">No project selected.</string>
+    <string name="error_no_network_available">No network available.</string>
 </resources>

@@ -19,8 +19,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".projectdetails.ProjectDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".projectdetails.ProjectDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver android:name=".ConnectivityBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

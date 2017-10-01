@@ -13,13 +13,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.thelsien.teamworkprojectslist.ConnectivityBroadcastReceiver;
+import com.thelsien.teamworkprojectslist.NetworkUtils;
 import com.thelsien.teamworkprojectslist.R;
 import com.thelsien.teamworkprojectslist.projectdetails.background.ProjectDetailsAsyncTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAsyncTask.ProjectDetailsLoaderListener {
+public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAsyncTask.ProjectDetailsLoaderListener, ConnectivityBroadcastReceiver.NetworkListener {
     public static final String TAG = ProjectDetailsFragment.class.getSimpleName();
 
     public static final String PROJECT_ID_KEY = "project_id";
@@ -27,6 +29,7 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
 
     private String mProjectId;
     private JSONObject mProject;
+    private boolean mShouldWaitForNetworkConnectivity = true;
 
     private TextView mDescriptionTextView;
     private TextView mCompanyNameTextView;
@@ -46,6 +49,20 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
     private TextView mAnnouncementEnabledView;
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        ConnectivityBroadcastReceiver.registerListener(getContext(), this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        ConnectivityBroadcastReceiver.unRegisterListener(getContext(), this);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(PROJECT_ID_KEY, mProjectId);
         outState.putString(PROJECT_KEY, mProject.toString());
@@ -53,15 +70,13 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            mProjectId = getArguments().getString(PROJECT_ID_KEY);
+        }
+
         return inflater.inflate(R.layout.fragment_project_details, container, false);
     }
 
@@ -85,10 +100,25 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
         mErrorTextView = view.findViewById(R.id.tv_error);
 
         if (savedInstanceState == null) {
-            mProjectId = getActivity().getIntent().getStringExtra(PROJECT_ID_KEY);
+            if (mProjectId == null) {
+                mShouldWaitForNetworkConnectivity = false;
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mErrorTextView.setVisibility(View.VISIBLE);
 
-            new ProjectDetailsAsyncTask(this).execute(mProjectId);
+                mErrorTextView.setText(getString(R.string.project_details_empty));
+            } else {
+                if (NetworkUtils.isNetworkAvailable(getContext())) {
+                    mShouldWaitForNetworkConnectivity = false;
+                    new ProjectDetailsAsyncTask(this).execute(mProjectId);
+                } else {
+                    mLoadingProgressBar.setVisibility(View.GONE);
+                    mErrorTextView.setVisibility(View.VISIBLE);
+
+                    mErrorTextView.setText(getString(R.string.error_no_network_available));
+                }
+            }
         } else {
+            mShouldWaitForNetworkConnectivity = false;
             mLoadingProgressBar.setVisibility(View.GONE);
             mContentScrollView.setVisibility(View.VISIBLE);
 
@@ -146,5 +176,15 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
         mErrorTextView.setVisibility(View.VISIBLE);
 
         mErrorTextView.setText(messageId);
+    }
+
+    @Override
+    public void onNetworkConnectivityChanged(boolean isConnected) {
+        if (mShouldWaitForNetworkConnectivity && isConnected && mProject == null) {
+            mLoadingProgressBar.setVisibility(View.VISIBLE);
+            mErrorTextView.setVisibility(View.GONE);
+
+            new ProjectDetailsAsyncTask(this).execute(mProjectId);
+        }
     }
 }

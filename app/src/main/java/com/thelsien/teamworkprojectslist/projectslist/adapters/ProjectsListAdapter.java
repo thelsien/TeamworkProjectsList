@@ -1,26 +1,27 @@
 package com.thelsien.teamworkprojectslist.projectslist.adapters;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.thelsien.teamworkprojectslist.MainActivity;
 import com.thelsien.teamworkprojectslist.R;
-import com.thelsien.teamworkprojectslist.projectdetails.ProjectDetailsActivity;
-import com.thelsien.teamworkprojectslist.projectdetails.ProjectDetailsFragment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.ProjectsListViewHolder> {
 
+    private ProjectClickedListener mListener;
     private JSONArray mProjects;
+    private int mSelectedPosition = -1;
 
-    public ProjectsListAdapter(JSONArray projects) {
+    public ProjectsListAdapter(ProjectClickedListener listener, JSONArray projects) {
         super();
 
+        mListener = listener;
         mProjects = projects;
     }
 
@@ -34,15 +35,24 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
     @Override
     public void onBindViewHolder(final ProjectsListViewHolder holder, int position) {
+        if (MainActivity.mIsTabledMode) {
+            if (mSelectedPosition != -1 && mSelectedPosition == position) {
+                holder.projectNameView.setBackgroundColor(holder.projectNameView.getResources().getColor(R.color.selected_list_item));
+            } else {
+                holder.projectNameView.setBackgroundColor(holder.projectNameView.getResources().getColor(android.R.color.transparent));
+            }
+        }
+
         holder.projectNameView.setText(mProjects.optJSONObject(position).optString("name"));
         holder.projectNameView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mSelectedPosition = holder.getAdapterPosition();
+
                 JSONObject project = mProjects.optJSONObject(holder.getAdapterPosition());
-                Intent intent = new Intent(view.getContext(), ProjectDetailsActivity.class);
-                intent.putExtra(ProjectDetailsFragment.PROJECT_ID_KEY, project.optString("id"));
-                intent.putExtra(ProjectDetailsActivity.PROJECT_NAME_KEY, project.optString("name"));
-                view.getContext().startActivity(intent);
+                mListener.onProjectClicked(project.optString("id"), project.optString("name"));
+
+                notifyDataSetChanged();
             }
         });
     }
@@ -61,5 +71,18 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
             projectNameView = itemView;
         }
+    }
+
+    public int getSelectedItemPosition() {
+        return mSelectedPosition;
+    }
+
+    public void setSelectedItemPosition(int position) {
+        mSelectedPosition = position;
+        notifyDataSetChanged();
+    }
+
+    public interface ProjectClickedListener {
+        void onProjectClicked(String projectId, String projectName);
     }
 }

@@ -7,4 +7,5 @@
     <color name="label_color">#0d0d0d</color>
     <color name="text_color">#353535</color>
     <color name="alt_text_color">#696969</color>
+    <color name="selected_list_item">#e6e6e6</color>
 </resources>
