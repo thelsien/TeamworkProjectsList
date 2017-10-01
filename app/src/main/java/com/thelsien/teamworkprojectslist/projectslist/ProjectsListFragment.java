@@ -88,7 +88,10 @@ public class ProjectsListFragment extends Fragment implements ProjectsListAsyncT
 
                 populateList();
             } catch (JSONException e) {
-                //TODO handle error somehow
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mErrorTextView.setVisibility(View.VISIBLE);
+
+                mErrorTextView.setText(getString(R.string.error_cannot_parse_saved_data));
                 e.printStackTrace();
             }
         }

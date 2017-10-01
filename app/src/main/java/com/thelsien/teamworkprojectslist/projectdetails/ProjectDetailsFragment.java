@@ -129,7 +129,10 @@ public class ProjectDetailsFragment extends Fragment implements ProjectDetailsAs
 
                 fillWithContent();
             } catch (JSONException e) {
-                //TODO handle error
+                mLoadingProgressBar.setVisibility(View.GONE);
+                mErrorTextView.setVisibility(View.VISIBLE);
+
+                mErrorTextView.setText(getString(R.string.error_cannot_parse_saved_data));
                 e.printStackTrace();
             }
         }

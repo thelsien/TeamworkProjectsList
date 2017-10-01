@@ -32,4 +32,5 @@
     <string name="project_logo_description">Project logo</string>
     <string name="project_details_empty">No project selected.</string>
     <string name="error_no_network_available">No network available.</string>
+    <string name="error_cannot_parse_saved_data">Cannot load in saved data.</string>
 </resources>
